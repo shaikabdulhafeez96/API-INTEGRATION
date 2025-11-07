@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Poppins",sans-serif;
+      background:linear-gradient(135deg,#16a085,#3498db);
+      height:100vh;display:flex;align-items:center;justify-content:center
+    }
+    .card{
+      background:#fff;width:360px;border-radius:15px;
+      box-shadow:0 5px 20px rgba(0,0,0,0.2);
+      text-align:center;padding:30px 25px
+    }
+    h1{color:#2ecc71;margin-bottom:5px}
+    h3{margin:10px 0;color:#555}
+    input{
+      width:80%;padding:10px;margin:15px 0;border:1px solid #ccc;
+      border-radius:8px;font-size:16px;outline:none
+    }
+    button{
+      background:#3498db;color:#fff;border:none;padding:10px 20px;
+      border-radius:6px;cursor:pointer;font-size:16px
+    }
+    button:hover{background:#2980b9}
+    .weather-result{margin-top:20px}
+    .weather-result img{width:100px;margin:10px 0}
+    .temp{font-size:28px;font-weight:bold;color:#2c3e50}
+    .desc{text-transform:capitalize;font-size:18px;color:#555}
+    .wind{color:#e74c3c;margin-top:10px;font-weight:500}
+    .time{color:#c0392b;font-size:14px;margin-top:5px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>abDuL's wEathEr</h1>
+    <input type="text" id="city" placeholder="Enter city name" />
+    <br />
+    <button onclick="getWeather()">Get Weather</button>
+
+    <div class="weather-result" id="result">
+      <p>Enter a city name to get weather info 🌦</p>
+    </div>
+  </div>
+
+  <script>
+    const apiKey = "72f60f7aa510d20eff97d0b8027c59cd"; // API key
+
+    async function getWeather(){
+      const city=document.getElementById("city").value.trim();
+      const result=document.getElementById("result");
+
+      if(!city){
+        result.innerHTML="<p>Please enter a city name.</p>";
+        return;
+      }
+
+      try{
+        const url=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+        const response=await fetch(url);
+        if(!response.ok)throw new Error("City not found");
+        const data=await response.json();
+
+        const icon=`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+        const localTime=new Date((data.dt+data.timezone)*1000);
+        const formattedTime=localTime.toLocaleString("en-US",{
+          weekday:"short",year:"numeric",month:"long",day:"numeric",
+          hour:"2-digit",minute:"2-digit",second:"2-digit"
+        });
+
+        result.innerHTML=`
+          <h2>${data.name}</h2>
+          <p class="time">${formattedTime}</p>
+          <img src="${icon}" alt="Weather icon">
+          <p class="temp">${data.main.temp.toFixed(1)}°C</p>
+          <p class="desc">${data.weather[0].description}</p>
+          <p class="wind">💨 Wind Speed: ${data.wind.speed} m/s</p>
+        `;
+      }catch(err){
+        result.innerHTML=`<p style="color:red;">${err.message}</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
