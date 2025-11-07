@@ -25,3 +25,7 @@ The app also includes error handling. If the user enters a city that does not ex
 In addition, the app uses icons provided by OpenWeatherMap to visually show the current weather condition, like sunny, rainy, cloudy, or snow. This helps users to quickly understand the weather without reading the text.
 
 Overall, this weather app project is a simple, interactive, and practical web application that teaches important concepts of web development. It involves working with HTML for structure, CSS for styling, and JavaScript for logic and API integration. Users can learn how to fetch data from external sources, handle JSON responses, and dynamically update the webpage. The app is fully responsive, visually appealing, and provides real-time weather information for any city in the world. It is a useful tool for learning and practicing web development skills while creating a project that is both functional and attractive.
+
+#OUTPUT
+
+<img width="1920" height="1140" alt="Image" src="https://github.com/user-attachments/assets/e839e3c0-de7d-443e-bbd9-a697873ca489" />
